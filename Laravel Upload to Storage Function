@@ -1,0 +1,16 @@
+public static function uploadFileToStorage($uploaded_file, $path)
+    {
+        $url = null;
+        if (isset($uploaded_file) && $uploaded_file !== null) {
+            $disk = Storage::disk("public");
+            $result = $disk->putFileAs($path, $uploaded_file, self::randomFileNameCreate($path, $uploaded_file->getClientOriginalExtension()));
+            if ($result) {
+                $url = config("filesystems.disks.public.url") . "/" . $result;
+            } else {
+                $url = null;
+            }
+
+        }
+        return $url;
+    }
+    
